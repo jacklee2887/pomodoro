@@ -1,4 +1,29 @@
 <h1>Currently In Progress:</h1>
+<table>
+	<thead>	
+		<tr>
+			<th>No.</th>
+			<th>Description</th>
+			<th>Progress</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		<% number = 0%>
+		<% @all_tasks.each do |task| %>
+			<% if task.user_id == current_user.id && task.in_progress && !task.completion %>
+				<tr>
+					<td><%= number += 1 %></td>
+					<td><%= task.description%></td>
+					<td><%= task.in_progress ? 'In Progress' : 'Pending' %></td>
+					<td><%= button_to 'Plant a seed!', task_path(task), method: :patch %></td>
+					<td><%= button_to 'Stop', task_path(task), method: :patch %></td>
+					<td><%= button_to 'Complete', task_complete_path(task), method: :patch %></td>
+				</tr>
+			<% end %>
+		<% end %>
+	</tbody>
+</table>
 
 <h1> To-Do List:</h1>
 <table>
@@ -14,19 +39,47 @@
 	<tbody>
 		<% number = 0%>
 		<% @all_tasks.each do |task| %>
-			<% if task.user_id == current_user.id %>
+			<% if task.user_id == current_user.id && !task.in_progress && !task.completion %>
 				<tr>
-				<td><%= number += 1 %></td>
-				<td><%= task.description%></td>
-				<td><%= task.in_progress ? 'In Progress' : 'Pending' %></td>
-				<td><%= task.completion ? 'Completed' : 'Incomplete'%></td>
-				<td><%= button_to 'Start', task_path(task), method: :patch %></td>
-				<td><%= button_to 'Complete', tasks_path %></td>
+					<td><%= number += 1 %></td>
+					<td><%= task.description%></td>
+					<td><%= task.in_progress ? 'In Progress' : 'Pending' %></td>
+					<td><%= task.completion ? 'Completed' : 'Incomplete'%></td>
+					<td><%= button_to 'Start', task_path(task), method: :patch %></td>
+					<td><%= button_to 'Complete', task_complete_path(task), method: :patch %></td>
 				</tr>
 			<% end %>
 		<% end %>
 	</tbody>
 </table>
+
+<h1> Completed:</h1>
+<table>
+	<thead>	
+		<tr>
+			<th>No.</th>
+			<th>Description</th>
+			<th>Progress</th>
+			<th>Status</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		<% number = 0%>
+		<% @all_tasks.each do |task| %>
+			<% if task.user_id == current_user.id && task.completion%>
+				<tr>
+					<td><%= number += 1 %></td>
+					<td><%= task.description%></td>
+					<td><%= task.in_progress ? 'In Progress' : 'Pending' %></td>
+					<td><%= task.completion ? 'Completed' : 'Incomplete'%></td>
+				</tr>
+			<% end %>
+		<% end %>
+	</tbody>
+</table>
+
+
 
 <h1>Create a new task:</h1>
 <%= form_for @new_task do |form| %>

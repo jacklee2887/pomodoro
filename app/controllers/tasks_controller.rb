@@ -11,6 +11,22 @@ class TasksController < ApplicationController
 		end
 	end
 
+	def update
+		@task = Task.find(params[:id])
+		@task.toggle(:in_progress)
+		@task.save
+
+		redirect_back fallback_location: '/'
+	end
+
+	def complete
+		@task = Task.find(params[:id])
+		@task.toggle(:completion)
+		@task.save
+
+		redirect_back fallback_location: '/'
+	end
+
 	private
 	def task_params
 		params.require(:task).permit(:description, :user_id)
