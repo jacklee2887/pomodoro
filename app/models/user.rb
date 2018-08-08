@@ -1,6 +1,9 @@
 class User < ApplicationRecord
 	 has_secure_password
 	 has_many :authentications, dependent: :destroy
+	 has_many :tasks
+	 has_many :tomatoes
+	
 
 	def self.create_with_auth_and_hash(authentication, auth_hash)
 		user = self.create!(
@@ -17,7 +20,6 @@ class User < ApplicationRecord
 		return x.token unless x.nil?
 	end
 
-	 has_many :tasks
 	 validates :email,
 		presence: { message: "Email must not be blank."},
 	    format: { with: /\w+@\w+\.\w{2,}/, message: "Email must be in format abc@example.com"},
