@@ -1,0 +1,37 @@
+<h1>Currently In Progress:</h1>
+
+<h1> To-Do List:</h1>
+<table>
+	<thead>	
+		<tr>
+			<th>No.</th>
+			<th>Description</th>
+			<th>Progress</th>
+			<th>Status</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		<% number = 0%>
+		<% @all_tasks.each do |task| %>
+			<% if task.user_id == current_user.id %>
+				<tr>
+				<td><%= number += 1 %></td>
+				<td><%= task.description%></td>
+				<td><%= task.in_progress ? 'In Progress' : 'Pending' %></td>
+				<td><%= task.completion ? 'Completed' : 'Incomplete'%></td>
+				<td><%= button_to 'Start', task_path(task), method: :patch %></td>
+				<td><%= button_to 'Complete', tasks_path %></td>
+				</tr>
+			<% end %>
+		<% end %>
+	</tbody>
+</table>
+
+<h1>Create a new task:</h1>
+<%= form_for @new_task do |form| %>
+	<%= form.label :description %><br>
+    <%= form.text_field :description %>
+    <%= form.hidden_field :user_id, :value => current_user.id %>
+   <%= form.submit 'Create Task!'%>
+<% end %>

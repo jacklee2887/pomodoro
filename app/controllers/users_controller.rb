@@ -18,6 +18,8 @@ class UsersController < ApplicationController
 	end
 
 	def show
+		@new_task = Task.new
+		@all_tasks = Task.all
 	end
 
 	private
