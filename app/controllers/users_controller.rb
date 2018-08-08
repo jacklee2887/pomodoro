@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
 	before_action :find_user, only: [:show, :update, :destroy]
+
 	
 	def new
 		@user = User.new
