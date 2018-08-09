@@ -1,4 +1,5 @@
 <p id="demo"></p>
+<p id="break"></p>
 <h1>Currently In Progress:</h1>
 <table>
 	<thead>	
@@ -17,8 +18,7 @@
 					<td><%= number += 1 %></td>
 					<td><%= task.description%></td>
 					<td><%= task.in_progress ? 'In Progress' : 'Pending' %></td>
-					<td><%= button_to 'Plant a seed!', tomatoes_path(task_id: task.id) %></td>
-					<td><button class="plant-seed-button" data-taskid="<%=task.id%>">AJAX Plant</button></td>
+					<td><button class="plant-seed-button" data-taskid="<%=task.id%>">Plant a seed!</button></td>
 					<td><%= button_to 'Stop', task_path(task), method: :patch %></td>
 					<td><%= button_to 'Complete', task_complete_path(task), method: :patch %></td>
 				</tr>
@@ -99,19 +99,15 @@
 
 	btns.forEach(function(btn) {
 		btn.onclick = function(){
-			console.log()
-			// $('#plant-seed-button').data('taskid')
-
 			$.ajaxSetup({
 	    		headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') }
 	  		});
 			$.ajax({
-			  type: "POST",
-			  url: "/tomatoes",
-			   data: {user_id: "<%= current_user.id %>", task_id: btn.dataset.taskid },
-			})
-			  .done(function() {
-			  	var countDownDate = new Date().getTime() + (25*60000);
+			  	type: "POST",
+			  	url: "/tomatoes",
+			  	data: {user_id: "<%= current_user.id %>", task_id: btn.dataset.taskid },
+			}).done(function(data) {
+			  	var countDownDate = new Date().getTime() + (0.5*60000);
 				// Update the count down every 1 second
 				var x = setInterval(function() {
 
@@ -132,8 +128,46 @@
 
 				  // If the count down is finished, write some text 
 				  if (distance < 0) {
-				    clearInterval(x);
-				    document.getElementById("demo").innerHTML = "TIME IS UP";
+				  	clearInterval(x);
+				  	
+					$.ajaxSetup({
+						headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') }
+					});
+					$.ajax({
+						type: "POST",
+						url: "/tomatoes/complete",
+						data: {id: data}
+					}).done(function(){
+
+							// Set the date we're counting down to
+							var countDownDate = new Date().getTime() + (0.1*60000);
+
+							// Update the count down every 1 second
+							var y = setInterval(function() {
+
+							  // Get todays date and time
+							  var now = new Date().getTime();
+
+							  // Find the distance between now and the count down date
+							  var distance = countDownDate - now;
+
+							  // Time calculations for days, hours, minutes and seconds
+							  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+							  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+							  // Display the result in the element with id="demo"
+				  		      document.getElementById("demo").innerHTML = "";
+							  document.getElementById("break").innerHTML = minutes + "m " + seconds + "s ";
+
+							  // If the count down is finished, write some text 
+							  if (distance < 0) {
+							    clearInterval(y);
+							    document.getElementById("break").innerHTML = "Break Time OVER!";
+							  }
+							}, 1000);
+
+					})
+
 				  }
 				}, 1000);
 			   }

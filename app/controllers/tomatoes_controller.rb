@@ -5,15 +5,24 @@ class TomatoesController < ApplicationController
 		@new_tomato.save
 
 		if @new_tomato.save
-			return 200
+
+			render plain: @new_tomato.id
+			# render json: {"hello": "world"}
 		else
 			return 405
 		end
 	end
 
-	def timer
+	def complete
+		@tomato = Tomato.find(params[:id])
+		@tomato.toggle(:completion)
+		@tomato.save
 
-		
+		if @tomato.save
+			return 200
+		else
+			return 405
+		end		
 	end
 
 	private
