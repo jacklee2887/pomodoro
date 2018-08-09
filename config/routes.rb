@@ -10,7 +10,7 @@ post "/users" => "users#create"
 
 
 resources :tomatoes
-patch "tomato/:id/timer" => "tomatoes#timer", as: "tomato_timer"
+post "/tomatoes/complete" => "tomatoes#complete", as: "tomato_complete"
 
 get '/login' => 'sessions#new'
 post '/login' => 'sessions#create'
