@@ -6,8 +6,11 @@ patch "tasks/:id/complete" => "tasks#complete", as: "task_complete"
 
 resources :users, only: [:update, :destroy, :show]
 get "/signup" => "users#new"
-post "/user" => "users#create"
+post "/users" => "users#create"
 
+
+resources :tomatoes
+patch "tomato/:id/timer" => "tomatoes#timer", as: "tomato_timer"
 
 get '/login' => 'sessions#new'
 post '/login' => 'sessions#create'
