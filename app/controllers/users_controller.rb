@@ -18,6 +18,7 @@ class UsersController < ApplicationController
 	end
 
 	def show
+		@new_tomato = Tomato.new
 		@new_task = Task.new
 		@all_tasks = Task.all
 	end
