@@ -17,6 +17,13 @@ class TasksController < ApplicationController
 		@task.save
 
 		redirect_back fallback_location: '/'
+	end	
+
+	def destroy
+		@task = Task.find(params[:id])
+		@task.destroy
+
+		redirect_back fallback_location: '/'
 	end
 
 	def complete

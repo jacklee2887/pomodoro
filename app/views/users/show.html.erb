@@ -7,6 +7,7 @@
 			<th>No.</th>
 			<th>Description</th>
 			<th>Progress</th>
+			<th>Tomatoes Grown</th>
 		</tr>
 	</thead>
 
@@ -18,6 +19,7 @@
 					<td><%= number += 1 %></td>
 					<td><%= task.description%></td>
 					<td><%= task.in_progress ? 'In Progress' : 'Pending' %></td>
+					<td><%= task.tomatoes.where(:completion => true).count %></td>
 					<td><button class="plant-seed-button" data-taskid="<%=task.id%>">Plant a seed!</button></td>
 					<td><%= button_to 'Stop', task_path(task), method: :patch %></td>
 					<td><%= button_to 'Complete', task_complete_path(task), method: :patch %></td>
@@ -35,6 +37,7 @@
 			<th>Description</th>
 			<th>Progress</th>
 			<th>Status</th>
+			<th>Tomatoes Grown</th>
 		</tr>
 	</thead>
 
@@ -47,13 +50,20 @@
 					<td><%= task.description%></td>
 					<td><%= task.in_progress ? 'In Progress' : 'Pending' %></td>
 					<td><%= task.completion ? 'Completed' : 'Incomplete'%></td>
+					<td><%= task.tomatoes.where(:completion => true).count %></td>
 					<td><%= button_to 'Start', task_path(task), method: :patch %></td>
 					<td><%= button_to 'Complete', task_complete_path(task), method: :patch %></td>
+					<td><%= button_to 'Delete', task_path(task), method: :delete %></td>
 				</tr>
 			<% end %>
 		<% end %>
 	</tbody>
 </table>
+
+<h2> Daily Tomatoes: <%= current_user.tomatoes.where(:completion => true, created_at: Time.now.beginning_of_day..Time.now.end_of_day).count %> </h2>
+<h2> Weekly Tomatoes: <%= current_user.tomatoes.where(:completion => true, created_at: Time.now.beginning_of_week..Time.now.end_of_week).count %></h2>
+<h2> Monthly Tomatoes: <%= current_user.tomatoes.where(:completion => true, created_at: Time.now.beginning_of_month..Time.now.end_of_month).count %></h2>
+<h2> Total Tomatoes this year: <%= current_user.tomatoes.where(:completion => true, created_at: Time.now.beginning_of_year..Time.now.end_of_year).count %> </h2>
 
 <h1> Completed:</h1>
 <table>
@@ -63,6 +73,7 @@
 			<th>Description</th>
 			<th>Progress</th>
 			<th>Status</th>
+			<th>Tomatoes Grown</th>
 		</tr>
 	</thead>
 
@@ -75,6 +86,7 @@
 					<td><%= task.description%></td>
 					<td><%= task.in_progress ? 'In Progress' : 'Pending' %></td>
 					<td><%= task.completion ? 'Completed' : 'Incomplete'%></td>
+					<td><%= task.tomatoes.where(:completion => true).count %></td>
 				</tr>
 			<% end %>
 		<% end %>
@@ -174,6 +186,55 @@
 			 );
 		}
 	})
-
-
 </script>
+
+
+    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+    <div id="player"></div>
+
+    <script>
+      // 2. This code loads the IFrame Player API code asynchronously.
+      var tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      // 3. This function creates an <iframe> (and YouTube player)
+      //    after the API code downloads.
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: '390',
+          width: '640',
+          playerVars: {
+            listType:'playlist',
+            list: 'PL-ZXjWfAJaSx8_fBKtKwrMKmcl-xBTGNP'
+          },
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
+        });
+      }
+
+      // 4. The API will call this function when the video player is ready.
+      function onPlayerReady(event) {
+        event.target.playVideo();
+      }
+
+      // 5. The API calls this function when the player's state changes.
+      //    The function indicates that when playing a video (state=1),
+      //    the player should play for six seconds and then stop.
+      // var done = false;
+      function onPlayerStateChange(event) {
+        // if (event.data == YT.PlayerState.PLAYING && !done) {
+        //   setTimeout(stopVideo, 6000);
+        //   done = true;
+        // }
+      }
+      // function stopVideo() {
+      //   player.stopVideo();
+      // }
+    </script>
+ 
