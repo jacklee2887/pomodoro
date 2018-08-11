@@ -22,6 +22,9 @@ gem 'omniauth-google-oauth2'
 # Figaro, protect keys through application.yml
 gem "figaro"
 
+# PostgreSQL’s full text search gem
+gem 'pg_search'
+
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks

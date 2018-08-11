@@ -34,6 +34,15 @@ class TasksController < ApplicationController
 		redirect_back fallback_location: '/'
 	end
 
+	def search
+		byebug
+		@search_tasks = Task.whose_description_starts_with(params[:description])
+
+		respond_to do |format|
+			format.js
+		end
+	end
+
 	private
 	def task_params
 		params.require(:task).permit(:description, :user_id)

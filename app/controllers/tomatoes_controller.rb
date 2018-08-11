@@ -5,9 +5,7 @@ class TomatoesController < ApplicationController
 		@new_tomato.save
 
 		if @new_tomato.save
-
 			render plain: @new_tomato.id
-			# render json: {"hello": "world"}
 		else
 			return 405
 		end
