@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 resources :tasks
 patch "tasks/:id/complete" => "tasks#complete", as: "task_complete"
+post "tasks/search" => "tasks#search", as: "task_search"
 
 
 resources :users, only: [:update, :destroy, :show]

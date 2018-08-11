@@ -1,5 +1,13 @@
 <p id="time_remaining"></p>
 <p id="alert_message"></p>
+
+<%= form_with url: task_search_path do |form| %>
+  <%= form.text_field :description %>
+  <%= form.submit 'Search!'%>
+<% end %>
+
+<div id="search_results"></div>
+
 <h1>Currently In Progress:</h1>
 <table>
 	<thead>	
