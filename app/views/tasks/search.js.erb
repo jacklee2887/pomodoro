@@ -1,1 +1,11 @@
-$('#search_results').text("<% @search_tasks.each do |task| %><%= task.description%><%= task.completion ? 'Completed' : 'Incomplete'%></td><%= task.tomatoes.where(:completion => true).count %><%end%>")
+$('#search_table_title').text("Search Results:")
+$('#search_table_head').append("<tr><th id='th_1'></th><th id='th_2'></th><th id='th_3'></th><th id='th_4'></th><th></th></tr>")
+$('#th_1').text("No.")
+$('#th_2').text("Description")
+$('#th_3').text("Status")
+$('#th_4').text("Tomatoes Grown")
+$('#search_table_body').append("<tbody><% number = 0%><% @search_tasks.each do |task| %><tr><td><%= number += 1 %></td><td><%= task.description%></td><td><%= task.completion ? 'Completed' : 'Incomplete'%></td><td><%= task.tomatoes.where(:completion => true).count %></td></tr><% end %></tbody>")
+
+
+			
+			

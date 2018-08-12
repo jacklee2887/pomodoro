@@ -35,9 +35,8 @@ class TasksController < ApplicationController
 	end
 
 	def search
-		byebug
 		@search_tasks = Task.whose_description_starts_with(params[:description])
-
+		
 		respond_to do |format|
 			format.js
 		end
