@@ -15,10 +15,6 @@ class UsersController < ApplicationController
 			flash[:error] = "Invalid Email or Password"
 			redirect_to '/signup'
 		end
-
-		respond_to do |format|
-			format.js
-		end
 	end
 
 	def show
