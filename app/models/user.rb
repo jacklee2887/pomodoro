@@ -27,5 +27,5 @@ class User < ApplicationRecord
 
 	validates :password, on: :create,
         presence: { message: "Password must not be blank."},
-        length: { minimum: 8 }
+        length: { minimum: 8, message: "Password must be at least 8 characters long." }
 end
