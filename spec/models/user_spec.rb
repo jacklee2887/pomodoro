@@ -8,7 +8,7 @@ require 'rails_helper'
 			end
 		end
 		context "when user password is invalid in length" do
-			it "should allow user to successfully create account" do
+			it "should not allow user to successfully create account" do
 				@user_invalid = User.new(email:"euegene@eugene.com", password:"1234").save
 				expect(User.all.size).to eq 0
 			end
