@@ -17,7 +17,7 @@ RSpec.feature "User Login", type: :feature do
           expect(page).to have_text "To-Do List:"
       end
 
-      scenario "a non-signed-up user failed to sign in" do
+      scenario "a non-signed-up user will fail sign in" do
           visit root_path
           
           click_link "Login"
