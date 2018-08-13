@@ -6,7 +6,7 @@ $('#th_1').text("No.")
 $('#th_2').text("Description")
 $('#th_3').text("Status")
 $('#th_4').text("Tomatoes Grown")
-$('#search_table_body').append("<% number = 0%><% @search_tasks.each do |task| %><tr><td><%= number += 1 %></td><td><%= task.description%></td><td><%= task.completion ? 'Completed' : 'Incomplete'%></td><td><%= task.tomatoes.where(:completion => true).count %></td></tr><% end %>")
+$('#search_table_body').append("<% number = 0%><% @search_tasks.each do |task| %><% if task.user_id == current_user.id && task.completion%><tr><td><%= number += 1 %></td><td><%= task.description%></td><td><%= task.completion ? 'Completed' : 'Incomplete'%></td><td><%= task.tomatoes.where(:completion => true).count %></td></tr><% end %><% end %>")
 
 
 			
